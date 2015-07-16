@@ -35,6 +35,26 @@ var User = mongoose.model('User')
 var UserHabit = mongoose.model('UserHabit')
 
 
+app.post('/api/increaseHabitStreak', function(req, res) {
+	console.log("increasing streak");
+	// check header or url parameters or post parameters for token
+  var token = req.body.token || req.query.token || req.headers['x-access-token'];
+  console.log(token);
+  // decode token
+  if (token) {
+    // verifies secret and checks exp
+    jwt.verify(token, 'ilovemyscotch', function(err, decoded) { 
+		var habitid = req.body.habitid || '';
+		UserHabit.findOne({ _id: habitid }, function (err, userhabit){
+			userhabit.streakLength++;
+			userhabit.lastUpdate = new Date().toJSON().slice(0,10)
+			userhabit.save();
+		});
+	});	
+	
+	}
+});
+
 app.post('/api/createhabit', function(req, res) {
 	
 	// check header or url parameters or post parameters for token

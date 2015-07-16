@@ -32,9 +32,12 @@ angular.module('login.services', [])
             return $http.post('/api/userhabits', {userid: $window.sessionStorage.userid, token: $window.sessionStorage.token});
         },	
 		createHabit: function(category, name) {
-			return $http.post('api/createhabit', { category: category, name: name, userid: $window.sessionStorage.userid, token: $window.sessionStorage.token});
+			return $http.post('/api/createhabit', { category: category, name: name, userid: $window.sessionStorage.userid, token: $window.sessionStorage.token});
+		},
+		increaseHabitStreak: function(habitid) {
+			return $http.post('/api/increaseHabitStreak', { habitid: habitid, token: $window.sessionStorage.token});
 		}
-    }
+	}
 })
 .service('TokenInterceptor', function ($q, $window, $location, AuthenticationService) {
     return {

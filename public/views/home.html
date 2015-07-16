@@ -29,7 +29,7 @@
 
 		<h3 > {{category}} </h3>
 		<ul>
-			<li ng-repeat="habit in habits"> {{habit}}  </li>
+			<li ng-repeat="habit in habits"> <h4> {{habit.name}} (Streak Length : <span style="color:red"> {{habit.streakLength}} </span> ) </h4> <button ng-hide="doneAlready(habit.lastUpdate)" ng-click="increaseHabitStreak(habit._id)" class="btn btn-default"> Increase Streak </button> </li>
 		</ul>
 	</div>
 

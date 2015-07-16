@@ -7,10 +7,10 @@ angular.module('habit.ctrl', ['login.services'])
 		function groupHabitsByCategory(habits) {
 			habits.forEach(function(entry) {
 				if ($scope.groupedHabits[entry.category] != undefined) {
-					$scope.groupedHabits[entry.category].push(entry.name);
+					$scope.groupedHabits[entry.category].push(entry);
 				} else {
 					$scope.groupedHabits[entry.category] = [];
-					$scope.groupedHabits[entry.category].push(entry.name);
+					$scope.groupedHabits[entry.category].push(entry);
 				}
 			});
 		}
@@ -32,6 +32,13 @@ angular.module('habit.ctrl', ['login.services'])
 			
 		}
 		
+		$scope.increaseHabitStreak = function increaseHabitStreak(habitID) {
+			HabitService.increaseHabitStreak(habitID);
+		}
+		
+		$scope.doneAlready = function(date) {
+			return date === new Date().toJSON().slice(0,10);
+		}
 		$scope.getHabits();
 	}
 ]);
