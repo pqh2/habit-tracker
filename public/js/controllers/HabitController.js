@@ -2,7 +2,18 @@
 angular.module('habit.ctrl', ['login.services'])
 .controller('HabitCtrl', ['$scope', '$location', '$window', 'HabitService' ,
     function HabitCtrl($scope, $location, $window, HabitService) {
-	
+		$scope.showNewHabit = false;
+		$scope.habitCreateToggleBtnTxt = "Show";
+		
+		$scope.toggleNewHabitCreateButton = function() {
+			if ($scope.showNewHabit == false) {
+				$scope.showNewHabit = true;
+				$scope.habitCreateToggleBtnTxt = "Hide";
+			} else {
+				$scope.showNewHabit = false;
+				$scope.habitCreateToggleBtnTxt = "Show";
+			}
+		}
 		$scope.groupedHabits = {};
 		function groupHabitsByCategory(habits) {
 			habits.forEach(function(entry) {
