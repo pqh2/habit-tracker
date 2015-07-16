@@ -1,0 +1,9 @@
+ // grab the mongoose module
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+var bcrypt = require('bcrypt')
+// User schema
+var HabitCategorySchema = new Schema({
+    name: { type: String, required: true }
+});
+module.exports = mongoose.model('HabitCategory', HabitCategorySchema);

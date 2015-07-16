@@ -1,0 +1,6 @@
+
+angular.module('login.ctrl', ['login.services'])
+.controller('LoginCtrl', ['$scope', '$location', '$window', 'UserService', 'AuthenticationService',
+    function LoginCtrl($scope, $location, $window, UserService, AuthenticationService) {
+ 
+]);
