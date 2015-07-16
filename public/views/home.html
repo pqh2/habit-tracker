@@ -25,14 +25,14 @@
         </div>
 </div>	
 <div class="jumbotron">
-
-
-	<h2> Your habit list: </h2>
+	<span class="text-center"> 
+		<h2> Your habit list: </h2>
+	</span>
 	<div   ng-repeat="(category, habits) in groupedHabits">
 
-		<h3 > {{category}} </h3>
-		<ul>
-			<li ng-repeat="habit in habits"> <h4> {{habit.name}} (Streak Length : <span style="color:red"> {{habit.streakLength}} </span> ) </h4> <button ng-hide="doneAlready(habit.lastUpdate)" ng-click="increaseHabitStreak(habit._id)" class="btn btn-default"> Increase Streak </button> </li>
+		<h3 > {{category}} <button ng-click="toggleCategory(category)" class="btn btn-default">  {{categoryShowBtnTxt[category]}} </h3>
+		<ul ng-if="shownCategories[category]">
+			<li ng-repeat="habit in habits"> <h4> {{habit.name}} (Streak Length : <span style="color:red"> {{habit.streakLength}}</span>) </h4> <button ng-hide="doneAlready(habit.lastUpdate)" ng-click="increaseHabitStreak(habit._id)" class="btn btn-default"> Increase Streak </button> </li>
 		</ul>
 	</div>
 

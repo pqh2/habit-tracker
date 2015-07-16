@@ -4,6 +4,9 @@ angular.module('habit.ctrl', ['login.services'])
     function HabitCtrl($scope, $location, $window, HabitService) {
 		$scope.showNewHabit = false;
 		$scope.habitCreateToggleBtnTxt = "Show";
+		$scope.shownCategories = {};
+		$scope.groupedHabits = {};
+		$scope.categoryShowBtnTxt = {};
 		
 		$scope.toggleNewHabitCreateButton = function() {
 			if ($scope.showNewHabit == false) {
@@ -14,16 +17,23 @@ angular.module('habit.ctrl', ['login.services'])
 				$scope.habitCreateToggleBtnTxt = "Show";
 			}
 		}
-		$scope.groupedHabits = {};
+		
 		function groupHabitsByCategory(habits) {
 			habits.forEach(function(entry) {
 				if ($scope.groupedHabits[entry.category] != undefined) {
 					$scope.groupedHabits[entry.category].push(entry);
 				} else {
+					$scope.shownCategories[entry.category] = false;
+					$scope.categoryShowBtnTxt[entry.category] = "+";
 					$scope.groupedHabits[entry.category] = [];
 					$scope.groupedHabits[entry.category].push(entry);
 				}
 			});
+		}
+		
+		$scope.toggleCategory = function toggleCategory(category) {
+			$scope.shownCategories[category] = !$scope.shownCategories[category];
+			$scope.categoryShowBtnTxt[category] = ($scope.categoryShowBtnTxt[category] === "+" ? "-" : "+");
 		}
 		
 		$scope.getHabits = function getHabits() {
