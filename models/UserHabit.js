@@ -8,6 +8,7 @@ var UserHabitSchema = new Schema({
 	category: {type: String, require: true},
     name: { type: String, required: true },
 	streakLength: { type: Number, default: 0 },
-	lastUpdate: {type: String, default: ""}
+	lastUpdate: {type: Date},
+	weekPattern: {type: String, default: "1111111"}
 });
 module.exports = mongoose.model('UserHabit', UserHabitSchema);

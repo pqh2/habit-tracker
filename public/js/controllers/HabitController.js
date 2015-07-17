@@ -7,6 +7,7 @@ angular.module('habit.ctrl', ['login.services'])
 		$scope.shownCategories = {};
 		$scope.groupedHabits = {};
 		$scope.categoryShowBtnTxt = {};
+		$scope.habitDaysOfWeek = [true, true,true,true,true,true, true];
 		
 		$scope.toggleNewHabitCreateButton = function() {
 			if ($scope.showNewHabit == false) {
@@ -31,6 +32,16 @@ angular.module('habit.ctrl', ['login.services'])
 			});
 		}
 		
+		function isSameDateAs(dateOne, dateTwo) {
+		  
+		  return (dateOne != undefined &&
+			dateTwo != undefined &&
+			dateOne.getFullYear() === dateTwo.getFullYear() &&
+			dateOne.getMonth() === dateTwo.getMonth() &&
+			dateOne.getDate() === dateTwo.getDate()
+		  );
+		}
+		
 		$scope.toggleCategory = function toggleCategory(category) {
 			$scope.shownCategories[category] = !$scope.shownCategories[category];
 			$scope.categoryShowBtnTxt[category] = ($scope.categoryShowBtnTxt[category] === "+" ? "-" : "+");
@@ -46,7 +57,12 @@ angular.module('habit.ctrl', ['login.services'])
 		};
 		
 		$scope.createHabit = function createHabit(habitCategory, habitName) {
-			HabitService.createHabit(habitCategory, habitName).success(function(data) {
+			var weekPattern = "";
+			for (var i = 0; i < 7; i++) {
+				weekPattern += ($scope.habitDaysOfWeek[i] ? "1" : "0");
+			}
+			
+			HabitService.createHabit(habitCategory, habitName, weekPattern).success(function(data) {
 				
 			}).error(function(status, data) {
 			})
@@ -58,7 +74,10 @@ angular.module('habit.ctrl', ['login.services'])
 		}
 		
 		$scope.doneAlready = function(date) {
-			return date === new Date().toJSON().slice(0,10);
+			var modelDate = new Date(date);
+			var now = new Date(); 
+			var now_utc = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(),  now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds());
+			return isSameDateAs(modelDate, now_utc);
 		}
 		$scope.getHabits();
 	}

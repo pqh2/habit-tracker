@@ -35,6 +35,60 @@ var User = mongoose.model('User')
 var UserHabit = mongoose.model('UserHabit')
 
 
+function getUTC(date)
+{
+	var now_utc = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),  date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
+	return now_utc;
+}
+
+function isSameDateAs(dateOne, dateTwo) {
+		  
+  return (dateOne != undefined &&
+	dateTwo != undefined &&
+	dateOne.getFullYear() === dateTwo.getFullYear() &&
+	dateOne.getMonth() === dateTwo.getMonth() &&
+	dateOne.getDate() === dateTwo.getDate()
+  );
+}
+
+function checkForBrokenStreaks() {
+	UserHabit.find({}, function(err, userhabits) {
+		userhabits.forEach(function(entry) {
+			var habitDate = entry.lastUpdate;
+			if (habitDate != undefined) {
+				var now = getUTC(new Date());
+				var nextDay = new Date(habitDate.getTime()  + 60 * 60 * 24 * 1000);				
+				
+				// loop that moves forward last updated date 
+				// if habit was not required on given day as long as habitDate < now
+				while(!isSameDateAs(now, habitDate)) {
+					if (entry.weekPattern[nextDay.getDay()] == "0") {
+						habitDate.setHours(habitDate.getHours() + 24);
+						nextDay.setHours(nextDay.getHours() + 24);
+						entry.lastUpdate = new Date(habitDate.valueOf());
+					} else {
+						break;
+					}
+				}			
+				
+				// if the habit was not updated today nor yesterday, this means
+				// the user broke the streak - so we have to reset the streak to 0
+				// and move the current date to yesterday (they might want to update today)
+				if (!isSameDateAs(now, nextDay) && !isSameDateAs(now, habitDate)) {
+					now.setHours(now.getHours() - 24);
+					entry.lastUpdate  = new Date(now.valueOf());
+					entry.streakLength = 0;
+					console.log('Missed day on ' + entry.name);
+				}			
+				
+				entry.markModified('lastUpdate');
+				entry.save(function (err) {
+				});
+			}
+		});
+	});
+}
+
 app.post('/api/increaseHabitStreak', function(req, res) {
 	console.log("increasing streak");
 	// check header or url parameters or post parameters for token
@@ -46,8 +100,10 @@ app.post('/api/increaseHabitStreak', function(req, res) {
     jwt.verify(token, 'ilovemyscotch', function(err, decoded) { 
 		var habitid = req.body.habitid || '';
 		UserHabit.findOne({ _id: habitid }, function (err, userhabit){
+			console.log("Updating streak");
 			userhabit.streakLength++;
-			userhabit.lastUpdate = new Date().toJSON().slice(0,10)
+			userhabit.lastUpdate = getUTC(new Date());
+			userhabit.markModified('lastUpdate');
 			userhabit.save();
 		});
 	});	
@@ -68,10 +124,12 @@ app.post('/api/createhabit', function(req, res) {
 		var userid = req.body.userid || '';
 		var category = req.body.category || '';
 		var name = req.body.name || '';
+		var weekpattern = req.body.weekpattern || '';
 		var newHabit = new UserHabit();
 		newHabit.userid = userid;
 		newHabit.category = category;
 		newHabit.name = name;
+		newHabit.weekPattern = weekpattern;
 		console.log(newHabit);
 		newHabit.save(function () {
 			res.status(200).send({ 
@@ -214,8 +272,6 @@ app.post('/api/signup', function(req, res) {
 	});
 
 });
-
-
        
 
 // route to handle creating goes here (app.post)
@@ -226,11 +282,11 @@ app.post('/api/signup', function(req, res) {
 });
 
 
-
-
-
-
 // start app ===============================================
 app.listen(port);	
 console.log('Magic happens on port ' + port); 			// shoutout to the user
 exports = module.exports = app; 						// expose app
+setInterval(function() {
+	console.log("Checking users habits");
+	checkForBrokenStreaks();
+}, 3600000);

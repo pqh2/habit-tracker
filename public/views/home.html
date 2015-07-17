@@ -19,10 +19,39 @@
         </div>
     </div>
 	 <div class="form-group">
+        <label for="monday" class="col-sm-4 control-label">Monday</label>
+        <input type="checkbox" class="form-control" id="monday" ng-model="habitDaysOfWeek[1]">
+        
+		<label for="tuesday" class="col-sm-4 control-label">Tuesday</label>
+      
+            <input type="checkbox" class="form-control" id="tuesday"ng-model="habitDaysOfWeek[2]">
+        
+		<label for="wednesday" class="col-sm-4 control-label">Wednesday</label>
+       
+            <input type="checkbox" class="form-control" id="wednesday" ng-model="habitDaysOfWeek[3]">
+       
+		<label for="thursday" class="col-sm-4 control-label">Thursday</label>
+       
+            <input type="checkbox" class="form-control" id="thursday" ng-model="habitDaysOfWeek[4]">
+        
+		<label for="friday" class="col-sm-4 control-label">Friday</label>
+       
+            <input type="checkbox" class="form-control" id="friday" ng-model="habitDaysOfWeek[5]">
+      
+		<label for="saturday" class="col-sm-4 control-label">Saturday</label>
+        
+            <input type="checkbox" class="form-control" id="saturday" ng-model="habitDaysOfWeek[6]">
+        
+		<label for="sunday" class="col-sm-4 control-label">Sunday</label>
+       
+            <input type="checkbox" class="form-control" id="sunday" ng-model="habitDaysOfWeek[0]">
+       
+	</div>
+	 <div class="form-group">
         <div class="col-sm-offset-4 col-sm-4">
             <button type="submit" class="btn btn-default" ng-click="createHabit(habit.category, habit.name)">Create Habit</button> 
         </div>
-        </div>
+	</div>
 </div>	
 <div class="jumbotron">
 	<span class="text-center"> 

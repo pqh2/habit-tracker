@@ -31,8 +31,8 @@ angular.module('login.services', [])
         getHabits: function() {
             return $http.post('/api/userhabits', {userid: $window.sessionStorage.userid, token: $window.sessionStorage.token});
         },	
-		createHabit: function(category, name) {
-			return $http.post('/api/createhabit', { category: category, name: name, userid: $window.sessionStorage.userid, token: $window.sessionStorage.token});
+		createHabit: function(category, name, weekpattern) {
+			return $http.post('/api/createhabit', { category: category, name: name, userid: $window.sessionStorage.userid, weekpattern: weekpattern, token: $window.sessionStorage.token});
 		},
 		increaseHabitStreak: function(habitid) {
 			return $http.post('/api/increaseHabitStreak', { habitid: habitid, token: $window.sessionStorage.token});
