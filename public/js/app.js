@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('sampleApp', ['ngRoute', 'appRoutes', 'login.ctrl', 'home.ctrl', 'habit.ctrl', 'login.services']);
+var app = angular.module('sampleApp', ['ngRoute', 'appRoutes', 'login.ctrl', 'home.ctrl', 'habit.ctrl', 'login.services', 'mymodal']);
 
 
 app.run(function($rootScope, $location, AuthenticationService, UserService) {

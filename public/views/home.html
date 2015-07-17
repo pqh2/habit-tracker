@@ -1,65 +1,67 @@
-<div class="text-center">
-	<button  class="btn btn-primary" ng-click="toggleNewHabitCreateButton()"> {{habitCreateToggleBtnTxt}} New Habit Form</button>
+<div style="margin-bottom:20px" class="text-center">
+	<button  class="btn btn-primary" ng-click="toggleModal()"> Create New Habit</button>
 </div>
-<div ng-if="showNewHabit" class="jumbotron text-center">
+<custommodal title="Create Habit" visible="showModal">
+	<div class="jumbotron text-center">
 
 
-	<h2> New habit: </h2>
-	<form class="form-horizontal" role="form">
-    <div class="form-group">
-        <label for="inputCategory" class="col-sm-4 control-label">Habit Category</label>
-        <div class="col-sm-4">
-            <input type="text" class="form-control" id="inputCategory" placeholder="Habit Category" ng-model="habit.category">
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="inputName" class="col-sm-4 control-label">Habit Name</label>
-        <div class="col-sm-4">
-            <input type="text" class="form-control" id="inputName" placeholder="Habit Name" ng-model="habit.name">
-        </div>
-    </div>
-	
-	<br/>
-	
-	<h3> Days of Week To Do Habit: </h3> 
-	
-	<br />
-	<span style="display: inline; margin-right:10px">
-			<label for="monday" class="control-label">Monday</label>
-			<input type="checkbox" id="monday" ng-model="habitDaysOfWeek[1]"/>
-	</span>
-	<span style="display: inline; margin-right:10px">
-		<label for="tuesday" class="control-label">Tuesday</label>
-		<input type="checkbox" id="tuesday"ng-model="habitDaysOfWeek[2]"/>
-	</span>
-	<span style="display: inline" >
-		<label for="wednesday" class=" control-label">Wednesday</label>
-		<input type="checkbox"id="wednesday; margin-right:10px" ng-model="habitDaysOfWeek[3]" />
-	</span>
-	<span style="display: inline; margin-right:10px">
-		<label for="thursday" class="control-label">Thursday</label>
-		<input type="checkbox"  id="thursday" ng-model="habitDaysOfWeek[4]" />
-	</span>
-	<span style="display: inline; margin-right:10px"> 
-		<label  for="friday" class="control-label">Friday</label>
-		<input type="checkbox" id="friday" ng-model="habitDaysOfWeek[5]"/>
-	</span>
-	<span style="display: inline; margin-right:10px">
-		<label for="saturday" class="control-label">Saturday</label>
-		<input type="checkbox" id="saturday" ng-model="habitDaysOfWeek[6]">
-	</span>
-	<span style="display: inline; margin-right:10px">
-		<label for="sunday" class="control-label">Sunday</label>
-		<input type="checkbox"  id="sunday" ng-model="habitDaysOfWeek[0]"/>
-	</span>
-	<br />
-	<br />
-	 <div style="display: inline; margin-right:10px">
-        <div class="col-sm-offset-4 col-sm-4">
-            <button type="submit" class="btn btn-default" ng-click="createHabit(habit.category, habit.name)">Create Habit</button> 
-        </div>
-	</div>
-</div>	
+		<h2> New habit: </h2>
+		<form class="form-horizontal" role="form">
+		<div class="form-group">
+			<label for="inputCategory" class="col-sm-4 control-label">Habit Category</label>
+			<div class="col-sm-4">
+				<input type="text" class="form-control" id="inputCategory" placeholder="Habit Category" ng-model="habit.category">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="inputName" class="col-sm-4 control-label">Habit Name</label>
+			<div class="col-sm-4">
+				<input type="text" class="form-control" id="inputName" placeholder="Habit Name" ng-model="habit.name">
+			</div>
+		</div>
+		
+		<br/>
+		
+		<h3> Days of Week To Do Habit: </h3> 
+		
+		<br />
+		<span style="display: inline; margin-right:10px">
+				<label for="monday" class="control-label">Monday</label>
+				<input type="checkbox" id="monday" ng-model="habitDaysOfWeek[1]"/>
+		</span>
+		<span style="display: inline; margin-right:10px">
+			<label for="tuesday" class="control-label">Tuesday</label>
+			<input type="checkbox" id="tuesday"ng-model="habitDaysOfWeek[2]"/>
+		</span>
+		<span style="display: inline; margin-right:10px" >
+			<label for="wednesday" class=" control-label">Wednesday</label>
+			<input type="checkbox"id="wednesday; margin-right:10px" ng-model="habitDaysOfWeek[3]" />
+		</span>
+		<span style="display: inline; margin-right:10px">
+			<label for="thursday" class="control-label">Thursday</label>
+			<input type="checkbox"  id="thursday" ng-model="habitDaysOfWeek[4]" />
+		</span>
+		<span style="display: inline; margin-right:10px"> 
+			<label  for="friday" class="control-label">Friday</label>
+			<input type="checkbox" id="friday" ng-model="habitDaysOfWeek[5]"/>
+		</span>
+		<span style="display: inline; margin-right:10px">
+			<label for="saturday" class="control-label">Saturday</label>
+			<input type="checkbox" id="saturday" ng-model="habitDaysOfWeek[6]">
+		</span>
+		<span style="display: inline; margin-right:10px">
+			<label for="sunday" class="control-label">Sunday</label>
+			<input type="checkbox"  id="sunday" ng-model="habitDaysOfWeek[0]"/>
+		</span>
+		<br />
+		<br />
+		 <div style="display: inline; margin-right:10px">
+			<div class="col-sm-offset-4 col-sm-4">
+				<button type="submit" class="btn btn-default" ng-click="createHabit(habit.category, habit.name)">Create Habit</button> 
+			</div>
+		</div>
+	</div>	
+</custommodal>
 <div class="jumbotron">
 	<span class="text-center"> 
 		<h2> Your habit list: </h2>

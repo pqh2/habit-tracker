@@ -1,6 +1,6 @@
 
-angular.module('habit.ctrl', ['login.services'])
-.controller('HabitCtrl', ['$scope', '$location', '$window', 'HabitService' ,
+angular.module('habit.ctrl', ['login.services', 'mymodal'])
+.controller('HabitCtrl', ['$scope', '$location', '$window', 'HabitService', 
     function HabitCtrl($scope, $location, $window, HabitService) {
 		$scope.showNewHabit = false;
 		$scope.habitCreateToggleBtnTxt = "Show";
@@ -8,6 +8,11 @@ angular.module('habit.ctrl', ['login.services'])
 		$scope.groupedHabits = {};
 		$scope.categoryShowBtnTxt = {};
 		$scope.habitDaysOfWeek = [true, true,true,true,true,true, true];
+		
+		$scope.showModal = false;
+		$scope.toggleModal = function(){
+			$scope.showModal = !$scope.showModal;
+		};
 		
 		$scope.toggleNewHabitCreateButton = function() {
 			if ($scope.showNewHabit == false) {
@@ -57,6 +62,7 @@ angular.module('habit.ctrl', ['login.services'])
 		};
 		
 		$scope.createHabit = function createHabit(habitCategory, habitName) {
+			$scope.showModal = false;
 			var weekPattern = "";
 			for (var i = 0; i < 7; i++) {
 				weekPattern += ($scope.habitDaysOfWeek[i] ? "1" : "0");
@@ -81,4 +87,5 @@ angular.module('habit.ctrl', ['login.services'])
 		}
 		$scope.getHabits();
 	}
-]);
+])
+ 
