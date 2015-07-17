@@ -30,8 +30,12 @@ angular.module('habit.ctrl', ['login.services', 'mymodal'])
 				if ($scope.groupedHabits[entry.category] != undefined) {
 					$scope.groupedHabits[entry.category].push(entry);
 				} else {
-					$scope.shownCategories[entry.category] = false;
-					$scope.categoryShowBtnTxt[entry.category] = "+";
+					if ($scope.shownCategories[entry.category] == undefined) {
+						$scope.shownCategories[entry.category] = false;
+					}
+					if ($scope.categoryShowBtnTxt[entry.category] == undefined) {
+						$scope.categoryShowBtnTxt[entry.category] = "+";
+					}
 					$scope.groupedHabits[entry.category] = [];
 					$scope.groupedHabits[entry.category].push(entry);
 				}
