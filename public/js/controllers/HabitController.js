@@ -25,6 +25,7 @@ angular.module('habit.ctrl', ['login.services', 'mymodal'])
 		}
 		
 		function groupHabitsByCategory(habits) {
+			$scope.groupedHabits = {};
 			habits.forEach(function(entry) {
 				if ($scope.groupedHabits[entry.category] != undefined) {
 					$scope.groupedHabits[entry.category].push(entry);
@@ -69,14 +70,17 @@ angular.module('habit.ctrl', ['login.services', 'mymodal'])
 			}
 			
 			HabitService.createHabit(habitCategory, habitName, weekPattern).success(function(data) {
-				
+				$scope.getHabits();
 			}).error(function(status, data) {
 			})
 			
 		}
 		
 		$scope.increaseHabitStreak = function increaseHabitStreak(habitID) {
-			HabitService.increaseHabitStreak(habitID);
+			HabitService.increaseHabitStreak(habitID).success(function(data) {
+				$scope.getHabits();
+			}).error(function(status, data) {
+			});
 		}
 		
 		$scope.doneAlready = function(date) {

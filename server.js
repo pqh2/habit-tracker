@@ -104,7 +104,13 @@ app.post('/api/increaseHabitStreak', function(req, res) {
 			userhabit.streakLength++;
 			userhabit.lastUpdate = getUTC(new Date());
 			userhabit.markModified('lastUpdate');
-			userhabit.save();
+			userhabit.save(function() {
+				res.status(200).send({ 
+					success: true, 
+					message: 'Success.' 
+				});
+				}
+			);
 		});
 	});	
 	
