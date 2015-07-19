@@ -97,8 +97,7 @@ function checkForBrokenStreaks() {
 app.listen(port);	
 console.log('Magic happens on port ' + port); 			// shoutout to the user
 exports = module.exports = app; 
-routes(app);
-					// expose app
+						// expose app
 setInterval(function() {
 	console.log("Checking users habits");
 	checkForBrokenStreaks();
