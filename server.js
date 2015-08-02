@@ -57,11 +57,16 @@ function isSameDateAs(dateOne, dateTwo) {
 function checkForBrokenStreaks() {
 	UserHabit.find({}, function(err, userhabits) {
 		userhabits.forEach(function(entry) {
-			var habitDate = entry.lastUpdate;
+			
+			// get last updated date on habit in its appropriate time zone (first conver to utc, then add offset)
+			var habitDate = getUTC(entry.lastUpdate);
+			habitDate.setHours(habitDate.getHours() - entry.lastUpdateTimeZone);
+			
 			if (habitDate != undefined) {
 				var now = getUTC(new Date());
+				now.setHours(now.getHours() - entry.lastUpdateTimeZone);
 				var nextDay = new Date(habitDate.getTime()  + 60 * 60 * 24 * 1000);				
-		
+	
 				// loop that moves forward last updated date 
 				// if habit was not required on given day as long as habitDate < now
 				while(!isSameDateAs(now, habitDate)) {

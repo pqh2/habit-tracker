@@ -59,13 +59,15 @@ module.exports = function(app) {
 			var userid = req.body.userid || '';
 			var category = req.body.category || '';
 			var name = req.body.name || '';
-			var weekpattern = req.body.weekpattern || '';
+			var weekpattern = req.body.weekpattern || '';			
+			var timeZone = parseInt(req.body.timeZone || '');
 			var newHabit = new UserHabit();
 			newHabit.userid = userid;
 			newHabit.category = category;
 			newHabit.name = name;
-			newHabit.weekPattern = weekpattern;
-			console.log(newHabit);
+			newHabit.weekPattern = weekpattern;			
+			newHabit.timeZone = timeZone;
+			console.log(timeZone);
 			newHabit.save(function () {
 				res.status(200).send({ 
 						success: true, 
